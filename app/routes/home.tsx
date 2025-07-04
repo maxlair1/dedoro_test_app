@@ -1,5 +1,6 @@
+import { useState } from "react";
 import type { Route } from "./+types/home";
-import Pomodoro from "~/components/pomodoro";
+import PomodoroTimer from "~/components/PomodoroTimer";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,19 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Pomodoro />;
+  const [time, setTime] = useState<number>()
+
+  return (
+    <>
+      <div>
+      <input
+        placeholder="Minutes"
+        type="number"
+        value={time ?? ""}
+        onChange={(e) => setTime(Number(e.target.value))}
+      />
+      </div>
+      <PomodoroTimer key={time} duration={time! * 60} />
+    </>
+  )
 }
